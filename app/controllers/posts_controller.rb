@@ -19,6 +19,23 @@ class PostsController < ApplicationController
     end
   end
 
+  def edit
+    @post = Post.find_by_group_id(params[:group_id])
+  end
+
+  def update
+    @post = Post.find_by_group_id(params[:group_id])
+    if @post.update(post_params)
+      redirect_to account_posts_path
+    end
+  end
+
+  def destroy
+    @post = Post.find_by_group_id(params[:group_id])
+    @post.delete
+    redirect_to account_posts_path
+  end
+
   private
     def post_params
       params.require(:post).permit(:content)
